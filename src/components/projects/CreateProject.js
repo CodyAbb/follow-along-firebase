@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createProject } from "../../store/actions/ProjectActions";
 
 export default function CreateProject() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const dispatch = useDispatch();
 
   const handleChange = event => {
     if (event.target.id === "title") {
@@ -14,8 +17,13 @@ export default function CreateProject() {
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log(title);
-    console.log(content);
+    // console.log(title);
+    // console.log(content);
+    const project = {
+      title: title,
+      content: content
+    };
+    dispatch(createProject(project));
   };
 
   return (
