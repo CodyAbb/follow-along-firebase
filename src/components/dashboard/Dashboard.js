@@ -2,9 +2,15 @@ import React from "react";
 import Notifications from "./Notifications";
 import ProjectList from "../projects/ProjectList";
 import { useDispatch, useSelector } from "react-redux";
+import { useFirestoreConnect } from "react-redux-firebase";
 
 export default function Dashboard() {
-  const projects = useSelector(state => state.project.projects);
+  useFirestoreConnect([{ collection: "projects" }]);
+
+  // const projects = useSelector(state => state.project.projects);
+  const projects = useSelector(state => state.firestore.ordered.projects);
+  // console.log(dbProjects);
+
   // console.log(projects);
 
   return (
