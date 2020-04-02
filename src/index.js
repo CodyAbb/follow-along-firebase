@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
@@ -15,10 +16,13 @@ import {
 import {
   ReactReduxFirebaseProvider,
   getFirebase,
-  isLoaded
+  isLoaded,
+  isEmpty
 } from "react-redux-firebase";
 import firebase, { fbConfig } from "./config/FbConfig";
 import { useSelector } from "react-redux";
+import SignIn from "./components/auth/SignIn";
+import Navbar from "./components/layout/Navbar";
 
 const store = createStore(
   rootReducer,
@@ -38,18 +42,61 @@ const rrfProps = {
   sessions: "sessions"
 };
 
-function AuthIsLoaded({ children }) {
+// function AuthIsLoaded({ children }) {
+//   const auth = useSelector(state => state.firebase.auth);
+//   if (!isLoaded(auth)) return <div>Loading Screen...</div>;
+//   return children;
+// }
+
+// function PrivateRoute({ children, ...rest }) {
+//   const auth = useSelector(state => state.firebase.auth);
+//   return (
+//     <Route
+//       {...rest}
+//       render={({ location }) =>
+//         isLoaded(auth) && !isEmpty(auth) ? (
+//           children
+//         ) : (
+//           <Redirect
+//             to={{
+//               pathname: "/signin",
+//               state: { from: location }
+//             }}
+//           />
+//         )
+//       }
+//     />
+//   );
+// }
+
+function PrivateRoute() {
   const auth = useSelector(state => state.firebase.auth);
-  if (!isLoaded(auth)) return <div>Loading Screen...</div>;
-  return children;
+  return isLoaded(auth) && !isEmpty(auth) ? (
+    <App />
+  ) : (
+    <Redirect
+      to={{
+        pathname: "/signin"
+        // state: { from: location }
+      }}
+    />
+  );
 }
 
 ReactDOM.render(
   <Provider store={store}>
     <ReactReduxFirebaseProvider {...rrfProps}>
-      <AuthIsLoaded>
-        <App />
-      </AuthIsLoaded>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/signin">
+            {/* Component containing a login which redirects
+              to /protected. NOTE: Not included in example */}
+            <Navbar />
+            <SignIn />
+          </Route>
+          <PrivateRoute />
+        </Switch>
+      </BrowserRouter>
     </ReactReduxFirebaseProvider>
   </Provider>,
   document.getElementById("root")
