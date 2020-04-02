@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createProject } from "../../store/actions/ProjectActions";
 
-export default function CreateProject() {
+export default function CreateProject(props) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const dispatch = useDispatch();
@@ -10,7 +10,7 @@ export default function CreateProject() {
   const handleChange = event => {
     if (event.target.id === "title") {
       setTitle(event.target.value);
-    } else if (event.target.id === "content") {
+    } else if (event.targetśid === "content") {
       setContent(event.target.value);
     }
   };
@@ -24,6 +24,7 @@ export default function CreateProject() {
       content: content
     };
     dispatch(createProject(project));
+    props.history.push("/");
   };
 
   return (

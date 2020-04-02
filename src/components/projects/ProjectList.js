@@ -9,7 +9,7 @@ export default function ProjectList({ projects }) {
         projects.map(project => {
           return (
             <Link to={`/project/${project.id}`} key={project.id}>
-              <ProjectSummary project={project} />;
+              <ProjectSummary project={project} />
             </Link>
           );
         })}
