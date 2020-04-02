@@ -23,6 +23,7 @@ import firebase, { fbConfig } from "./config/FbConfig";
 import { useSelector } from "react-redux";
 import SignIn from "./components/auth/SignIn";
 import Navbar from "./components/layout/Navbar";
+import SignUp from "./components/auth/SignUp";
 
 const store = createStore(
   rootReducer,
@@ -89,10 +90,12 @@ ReactDOM.render(
       <BrowserRouter>
         <Switch>
           <Route path="/signin">
-            {/* Component containing a login which redirects
-              to /protected. NOTE: Not included in example */}
             <Navbar />
             <SignIn />
+          </Route>
+          <Route path="/signup">
+            <Navbar />
+            <SignUp />
           </Route>
           <PrivateRoute />
         </Switch>
