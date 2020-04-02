@@ -9,6 +9,7 @@ export default function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const auth = useSelector(state => state.firebase.auth);
+  const authError = useSelector(state => state.auth.authError);
   const dispatch = useDispatch();
 
   const handleChange = event => {
@@ -59,6 +60,9 @@ export default function SignUp() {
         </div>
         <div className="input-field">
           <button className="btn pink lighten-1 z-depth-0">Sign Up</button>
+          <div className="red-text center">
+            {authError ? <p>{authError}</p> : null}
+          </div>
         </div>
       </form>
     </div>

@@ -1,10 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { signOut } from "../../store/actions/AuthActions";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-export default function SignedInLinks() {
+export default function SignedInLinks({ profile }) {
   const dispatch = useDispatch();
+  const auth = useSelector(state => state.firebase.auth);
 
   const handleSignOut = () => {
     dispatch(signOut());
@@ -19,7 +20,7 @@ export default function SignedInLinks() {
       </li>
       <li>
         <NavLink to="/" className="btn btn-floating pink lighten-1">
-          CA
+          {profile.initials}
         </NavLink>
       </li>
     </ul>

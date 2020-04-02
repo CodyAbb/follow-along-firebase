@@ -6,7 +6,13 @@ import { useSelector } from "react-redux";
 
 export default function Navbar() {
   const auth = useSelector(state => state.firebase.auth);
-  const links = auth.uid ? <SignedInLinks /> : <SignedOutLinks />;
+  const profile = useSelector(state => state.firebase.profile);
+
+  const links = auth.uid ? (
+    <SignedInLinks profile={profile} />
+  ) : (
+    <SignedOutLinks />
+  );
 
   return (
     <nav className="nav-wrapper grey darken-3">
