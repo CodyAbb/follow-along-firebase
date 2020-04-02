@@ -1,8 +1,12 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { signIn } from "../../store/actions/AuthActions";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const authError = useSelector(state => state.auth.authError);
 
   const handleChange = event => {
     if (event.target.id === "email") {
@@ -14,8 +18,11 @@ export default function SignIn() {
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log(email);
-    console.log(password);
+    const credentials = {
+      email: email,
+      password: password
+    };
+    dispatch(signIn(credentials));
   };
 
   return (
@@ -32,6 +39,9 @@ export default function SignIn() {
         </div>
         <div className="input-field">
           <button className="btn pink lighten-1 z-depth-0">Login</button>
+          <div className="red-text center">
+            {authError ? <p>{authError}</p> : null}
+          </div>
         </div>
       </form>
     </div>
