@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { signUp } from "../../store/actions/AuthActions";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
@@ -8,6 +9,7 @@ export default function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const auth = useSelector(state => state.firebase.auth);
+  const dispatch = useDispatch();
 
   const handleChange = event => {
     if (event.target.id === "email") {
@@ -23,10 +25,14 @@ export default function SignUp() {
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log(email);
-    console.log(password);
-    console.log(firstName);
-    console.log(lastName);
+
+    const newUser = {
+      email: email,
+      password: password,
+      firstName: firstName,
+      lastName: lastName
+    };
+    dispatch(signUp(newUser));
   };
 
   if (auth.uid) return <Redirect to="/" />;
