@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { signIn } from "../../store/actions/AuthActions";
+import { Redirect } from "react-router-dom";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const authError = useSelector(state => state.auth.authError);
+  const auth = useSelector(state => state.firebase.auth);
 
   const handleChange = event => {
     if (event.target.id === "email") {
@@ -24,6 +26,8 @@ export default function SignIn() {
     };
     dispatch(signIn(credentials));
   };
+
+  if (auth.uid) return <Redirect to="/" />;
 
   return (
     <div className="container">
