@@ -1,6 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useFirestoreConnect } from "react-redux-firebase";
+import moment from "moment";
+import { NavLink } from "react-router-dom";
 
 export default function ProjectDetails(props) {
   useFirestoreConnect([
@@ -12,7 +14,7 @@ export default function ProjectDetails(props) {
   if (project) {
     return (
       <div className="container section project-details">
-        <div className="card z-depth-0">
+        <div className="card">
           <div className="card-content">
             <span className="card-title">{project.title}</span>
             <p>{project.content}</p>
@@ -21,9 +23,12 @@ export default function ProjectDetails(props) {
             <div>
               Posted by {project.authorFirstName} {project.authorLastName}
             </div>
-            <div>27/04/20</div>
+            <div>{moment(project.createdAt.toDate()).calendar()}</div>
           </div>
         </div>
+        <NavLink to="/" className="btn btn-floating pink lighten-1">
+          <i class="material-icons">arrow_back</i>
+        </NavLink>
       </div>
     );
   } else {

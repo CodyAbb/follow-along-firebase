@@ -10,19 +10,20 @@ export default function CreateProject(props) {
   const handleChange = event => {
     if (event.target.id === "title") {
       setTitle(event.target.value);
-    } else if (event.targetśid === "content") {
+    } else if (event.target.id === "content") {
       setContent(event.target.value);
     }
   };
 
   const handleSubmit = event => {
     event.preventDefault();
-    // console.log(title);
-    // console.log(content);
+
     const project = {
       title: title,
       content: content
     };
+    // console.log(project);
+
     dispatch(createProject(project));
     props.history.push("/");
   };
